@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28917.181
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetCore2WebApp", "NetCore2WebApp\NetCore2WebApp.csproj", "{90F7BC54-835C-4FD8-AEDD-0AB0A6F06D23}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csproj", "{86607210-545F-4E16-8916-4F95D1231AD5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{90F7BC54-835C-4FD8-AEDD-0AB0A6F06D23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90F7BC54-835C-4FD8-AEDD-0AB0A6F06D23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90F7BC54-835C-4FD8-AEDD-0AB0A6F06D23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90F7BC54-835C-4FD8-AEDD-0AB0A6F06D23}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86607210-545F-4E16-8916-4F95D1231AD5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86607210-545F-4E16-8916-4F95D1231AD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86607210-545F-4E16-8916-4F95D1231AD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86607210-545F-4E16-8916-4F95D1231AD5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CA06AAF9-F66D-4270-A5DC-4F7ECE330847}
+	EndGlobalSection
+EndGlobal
