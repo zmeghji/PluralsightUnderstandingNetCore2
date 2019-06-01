@@ -2,53 +2,21 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace NetCore2WebApp.Services
+namespace API.Repositories
 {
-    public interface IProposalService
+    public interface IProposalRepository
     {
-        Task Add(ProposalModel model);
+        Task<ProposalModel> Add(ProposalModel model);
         Task<ProposalModel> Approve(int id);
         Task<IEnumerable<ProposalModel>> GetAll(int conferenceId);
+        Task<ProposalModel> GetById(int id);
     }
-    public class ProposalApiService : IProposalService
-    {
-        private readonly HttpClient HttpClient;
-        public ProposalApiService(IHttpClientFactory httpClientFactory)
-        {
-            HttpClient = httpClientFactory.CreateClient("Api");
-        }
-        async Task IProposalService.Add(ProposalModel model)
-        {
-            await HttpClient.PostAsJsonAsync("/v1/proposal", model);
-        }
-
-        async Task<ProposalModel> IProposalService.Approve(int id)
-        {
-            var response = await HttpClient.PutAsync($"/v1/proposal/{id}", null);
-            if (!response.IsSuccessStatusCode)
-            {
-                throw new HttpRequestException(response.ReasonPhrase);
-            }
-            return await response.Content.ReadAsAsync<ProposalModel>();
-        }
-
-        async Task<IEnumerable<ProposalModel>>  IProposalService.GetAll(int conferenceId)
-        {
-            var response = await HttpClient.GetAsync($"/v1/proposal/{conferenceId}");
-            if (!response.IsSuccessStatusCode)
-            {
-                throw new HttpRequestException(response.ReasonPhrase);
-            }
-            return await response.Content.ReadAsAsync<List<ProposalModel>>();
-        }
-    }
-    public class ProposalMemoryService: IProposalService
+    public class ProposalRepository: IProposalRepository
     {
         private readonly List<ProposalModel> ProposalList;
-        public ProposalMemoryService()
+        public ProposalRepository()
         {
             ProposalList = new List<ProposalModel>();
             ProposalList.Add(
@@ -57,17 +25,17 @@ namespace NetCore2WebApp.Services
                     Id = 1,
                     Speaker = "Naruto Uzamaki",
                     Title = "Advanced Rasengan",
-                    ConferenceId =1,
+                    ConferenceId = 1,
                     Approved = false
                 }
-                ) ;
+                );
             ProposalList.Add(
                 new ProposalModel
                 {
                     Id = 2,
                     Speaker = "Sasuke Uchiha",
                     Title = "Sharingan Mastery",
-                    ConferenceId =2,
+                    ConferenceId = 2,
                     Approved = false
                 }
                 );
@@ -77,7 +45,7 @@ namespace NetCore2WebApp.Services
                     Id = 3,
                     Speaker = "Shikamaru Nara",
                     Title = "Shadow Possesion Jutsu",
-                    ConferenceId =3,
+                    ConferenceId = 3,
                     Approved = true
                 }
                 );
@@ -103,7 +71,7 @@ namespace NetCore2WebApp.Services
                 );
         }
 
-        Task<ProposalModel> IProposalService.Approve(int id)
+        Task<ProposalModel> IProposalRepository.Approve(int id)
         {
             return Task.Run(() =>
             {
@@ -112,15 +80,20 @@ namespace NetCore2WebApp.Services
                 return proposal;
             });
         }
-        Task IProposalService.Add(ProposalModel model)
+        Task<ProposalModel> IProposalRepository.Add(ProposalModel model)
         {
             ProposalList.Add(model);
-            return Task.CompletedTask;
+            return Task.Run(()=> model);
         }
-       
-        Task<IEnumerable<ProposalModel>> IProposalService.GetAll(int conferenceId)
+
+        Task<IEnumerable<ProposalModel>> IProposalRepository.GetAll(int conferenceId)
         {
             return Task.Run(() => ProposalList.Where(p => p.ConferenceId == conferenceId).AsEnumerable());
+        }
+
+        Task<ProposalModel> IProposalRepository.GetById(int id)
+        {
+            return Task.Run(() => ProposalList.First(p => p.Id == id));
         }
     }
 }

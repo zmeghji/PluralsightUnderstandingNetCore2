@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace NetCore2WebApp.Services
@@ -13,6 +14,42 @@ namespace NetCore2WebApp.Services
         Task<StatisticsModel> GetStatistics();
         Task Add(ConferenceModel model);
     }
+    public class ConferenceApiService : IConferenceService
+    {
+        private readonly HttpClient HttpClient;
+        public ConferenceApiService(HttpClient httpClient)
+        {
+            HttpClient = httpClient;
+            HttpClient.BaseAddress = new Uri("http://localhost:54391");
+        }
+        //public ConferenceApiService(IHttpClientFactory httpClientFactory)
+        //{
+        //    HttpClient = httpClientFactory.CreateClient("Api");
+        //}
+        async Task IConferenceService.Add(ConferenceModel model)
+        {
+            await HttpClient.PostAsJsonAsync("/v1/conference", model);
+        }
+
+        async Task<IEnumerable<ConferenceModel>> IConferenceService.GetAll()
+        {
+            var resp=await HttpClient.GetAsync("/v1/conference");
+            return await resp.Content.ReadAsAsync<IEnumerable<ConferenceModel>>();
+        }
+
+        async Task<ConferenceModel> IConferenceService.GetById(int id)
+        {
+            var resp = await HttpClient.GetAsync($"/v1/conference/{id}");
+            return await resp.Content.ReadAsAsync<ConferenceModel>();
+        }
+
+        async Task<StatisticsModel> IConferenceService.GetStatistics()
+        {
+            var resp = await HttpClient.GetAsync("v1/statistics");
+            return await resp.Content.ReadAsAsync<StatisticsModel>();
+        }
+    }
+    //public interface 
     public class ConferenceMemoryService: IConferenceService
     {
         private readonly List<ConferenceModel> ConferenceList;

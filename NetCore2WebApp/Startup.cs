@@ -25,8 +25,16 @@ namespace NetCore2WebApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-            services.AddSingleton<IConferenceService, ConferenceMemoryService>();
-            services.AddSingleton<IProposalService, ProposalMemoryService>();
+            //services.AddSingleton<IConferenceService, ConferenceMemoryService>();
+            //services.AddSingleton<IConferenceService, ConferenceApiService>();
+
+            //services.AddSingleton<IProposalService, ProposalMemoryService>();
+            services.AddSingleton<IProposalService, ProposalApiService>();
+
+
+            services.AddHttpClient("Api", c => c.BaseAddress = new Uri("http://localhost:54391"));
+
+            services.AddHttpClient<IConferenceService, ConferenceApiService>();
             services.Configure<AppOptions>(Configuration.GetSection("NetCore2WebApp"));
         }
 
