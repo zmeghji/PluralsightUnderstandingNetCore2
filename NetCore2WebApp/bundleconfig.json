@@ -3,6 +3,7 @@
     "outputFileName": "wwwroot/css/all.min.css",
     "inputFiles": [
       "node_modules/bootstrap/dist/css/bootstrap.css",
+      "node_modules/font-awesome/css/font-awesome.css",
       "wwwroot/css/site.css"
     ]
   },
@@ -10,6 +11,14 @@
     "outputFileName": "wwwroot/css/bootstrap.css",
     "inputFiles": [
       "node_modules/bootstrap/dist/css/bootstrap.css"
+
+    ],
+    "minify": { "enabled": false }
+  },
+  {
+    "outputFileName": "wwwroot/css/font-awesome.css",
+    "inputFiles": [
+      "node_modules/font-awesome/css/font-awesome.css"
     ],
     "minify": { "enabled": false }
   }

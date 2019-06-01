@@ -1,0 +1,24 @@
+﻿@using Microsoft.Extensions.Options
+@using NetCore2WebApp
+@model Shared.ConferenceModel
+@inject IOptions<AppOptions> options
+<tr>
+    <td>@Model.Name</td>
+    <td>@Model.Location</td>
+    <td>@Model.Start</td>
+    <td>
+        @if (Model.AttendeeTotal >= options.Value.BoldConferenceAttendeeThreshold)
+        {
+            <strong>@Model.AttendeeTotal</strong>
+        }
+        else
+        {
+            @Model.AttendeeTotal
+        }
+    </td>
+    <td>
+        <a asp-controller="Proposal" asp-action="Index" asp-route-conferenceId="@Model.Id">
+            Proposals
+        </a>
+    </td>
+</tr>

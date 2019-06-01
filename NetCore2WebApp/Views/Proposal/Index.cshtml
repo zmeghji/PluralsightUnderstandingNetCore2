@@ -1,0 +1,24 @@
+﻿@using Shared
+@model IEnumerable<ProposalModel>
+<div class="row">
+    <div class="col-md-10 offset-md-2">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Speaker</th>
+                    <th>Approved</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(var proposal in Model)
+                {
+                    await Html.RenderPartialAsync("ProposalModel", proposal);
+                }
+                @*@Html.DisplayForModel()*@
+            </tbody>
+        </table>
+        <a asp-action="Add" asp-route-conferenceId="@ViewBag.ConferenceId">Add</a>
+    </div>
+</div>
